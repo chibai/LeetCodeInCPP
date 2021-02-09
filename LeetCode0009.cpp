@@ -17,25 +17,16 @@ struct ListNode {
 class Solution {
 public:
 	bool isPalindrome(int x) {
-		if (x < 0)
+		if (x < 0 || (x % 10 == 0 && x != 0))
 			return false;
-		
-		int digitalCounts = 0, tmp = x, left, right;
-		while (tmp != 0)
+
+		int reverseNumber = 0;
+		while (x > reverseNumber)
 		{
-			tmp = tmp / 10;
-			digitalCounts++;
-		}
-		for (int i = 1; i <= digitalCounts / 2; i++)
-		{
-			right = x % 10;
+			reverseNumber = 10 * reverseNumber + x % 10;
 			x = x / 10;
-			left = x / int(pow(10, digitalCounts - 2 * i)) % 10;
-			if (left != right)
-				return false;
-			
 		}
-		return true;
+		return (x == reverseNumber) || (x == reverseNumber / 10);
 	}
 };
 
