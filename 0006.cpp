@@ -19,39 +19,40 @@ struct ListNode
 class Solution
 {
 public:
-    string convert(string s, int numRows) 
-    {
-        if (numRows == 1)
+    int reverse(int x) {
+        if (x == INT32_MIN || x == 0)
+            return 0;
+        int flag = x < 0 ? -1:1;
+        x = abs(x);
+        int result = 0;
+        int tmp;
+        while (x != 0)
         {
-            return s;
-        }
-        vector<string> rows(numRows);
-        // top bottom flag
-        int flag = 1;
-        int idxRows = 0;
-        for (size_t i = 0; i < s.length(); i++)
-        {
-            rows[idxRows].push_back(s[i]);
-            idxRows += flag;
-            if (idxRows == numRows - 1 || idxRows == 0)
-            {//for most bottom case and most top case
-                flag = -flag;
+            tmp = x % 10;
+            x = x / 10;
+            if (flag > 0)
+            {
+                if (result > (INT32_MAX - tmp) / 10)  
+                    return 0;
+                else
+                    result = 10 * result + tmp;
+            }
+            else // flag < 0
+            {
+                if (result < (INT32_MIN + tmp) / 10)
+                    return 0;
+                else
+                    result = 10 * result - tmp;
             }
         }
-        string res;
-        for (auto row:rows)
-        {
-            res += row;
-        }
-        return res;
-        
+        return result;
     }
 };
 
 int main()
 {
     Solution solution = Solution();
-    auto results = solution.convert("PAYPALISHIRING", 3);
+    auto results = solution.reverse(-120);
     std::cout << results << std::endl;
     return 0;
 }
