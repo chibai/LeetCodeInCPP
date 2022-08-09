@@ -22,26 +22,21 @@ public:
     bool isPalindrome(int x) {
         if (x < 0)  return false;
         if (x < 10) return true;
+        if (x % 10 == 0)    return false;
         int rest = 0;
-        int current = 0;
         while (x > rest)
         {
-            current = x % 10;
+            rest = 10 * rest + x % 10;
             x = x / 10;
-            if (rest == x)
-                return true;
-            rest = 10 * rest + current;
-            if (rest == x)
-                return true;
         }
-        return false;
+        return (x == rest) || (x == rest / 10);
     }
 };
 
 int main()
 {
     Solution solution = Solution();
-    auto results = solution.isPalindrome(1221);
+    auto results = solution.isPalindrome(10);
     std::cout << results << std::endl;
     return 0;
 }
